@@ -82,8 +82,9 @@ export default function HomePage() {
     if (!shouldDelete) {
       return;
     }
+
     const config = {
-      data: { transactionId },
+      data: { id: transactionId },
       headers: { Authorization: `Bearer ${context.lsToken}` },
     };
     const promise = axios.delete(
