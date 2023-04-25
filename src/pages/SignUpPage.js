@@ -1,13 +1,13 @@
-import { Link, useNavigate } from "react-router-dom"
-import styled from "styled-components"
-import MyWalletLogo from "../components/MyWalletLogo"
-import React, { useContext } from "react"
-import axios from "axios"
-import Context from "../Context"
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import MyWalletLogo from "../components/MyWalletLogo";
+import React, { useContext } from "react";
+import axios from "axios";
+import Context from "../Context";
 
 export default function SignUpPage() {
-  const navigate = useNavigate()
-  const context = useContext(Context)
+  const navigate = useNavigate();
+  const context = useContext(Context);
 
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
@@ -18,16 +18,21 @@ export default function SignUpPage() {
     name,
     email,
     password,
-    repeatPassword
-  }
+    repeatPassword,
+  };
 
   const signUp = (event) => {
     event.preventDefault();
-    const promise = axios.post(`${process.env.REACT_APP_API_URL}cadastro`, signUpTemplate);
+    const promise = axios.post(
+      `${process.env.REACT_APP_API_URL}cadastro`,
+      signUpTemplate
+    );
 
     promise
       .then(() => {
-        alert("Usuário criado com sucesso! Realize o login com seu e-mail e senha!");
+        alert(
+          "Usuário criado com sucesso! Realize o login com seu e-mail e senha!"
+        );
         navigate("/");
       })
       .catch((error) => {
@@ -37,26 +42,46 @@ export default function SignUpPage() {
 
   React.useEffect(() => {
     if (context.lsToken || context.lsName) {
-      navigate("/home")
+      navigate("/home");
     }
-  }, [context.lsToken, context.lsName, navigate])
+  }, [context.lsToken, context.lsName, navigate]);
 
   return (
     <SingUpContainer>
       <form>
         <MyWalletLogo />
-        <input placeholder="Nome" type="text" onChange={event => setName(event.target.value)} value={name} />
-        <input placeholder="E-mail" type="email" onChange={event => setEmail(event.target.value)} value={email} />
-        <input placeholder="Senha" type="password" autoComplete="new-password" onChange={event => setPassword(event.target.value)} value={password} />
-        <input placeholder="Confirme a senha" type="password" autoComplete="new-password" onChange={event => setRepeatPassword(event.target.value)} value={repeatPassword} />
+        <input
+          placeholder="Nome"
+          type="text"
+          onChange={(event) => setName(event.target.value)}
+          value={name}
+        />
+        <input
+          placeholder="E-mail"
+          type="email"
+          onChange={(event) => setEmail(event.target.value)}
+          value={email}
+        />
+        <input
+          placeholder="Senha"
+          type="password"
+          autoComplete="new-password"
+          onChange={(event) => setPassword(event.target.value)}
+          value={password}
+        />
+        <input
+          placeholder="Confirme a senha"
+          type="password"
+          autoComplete="new-password"
+          onChange={(event) => setRepeatPassword(event.target.value)}
+          value={repeatPassword}
+        />
         <button onClick={(event) => signUp(event)}>Cadastrar</button>
       </form>
 
-      <Link to={"/"}>
-        Já tem uma conta? Entre agora!
-      </Link>
+      <Link to={"/"}>Já tem uma conta? Entre agora!</Link>
     </SingUpContainer>
-  )
+  );
 }
 
 const SingUpContainer = styled.section`
@@ -65,4 +90,4 @@ const SingUpContainer = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
