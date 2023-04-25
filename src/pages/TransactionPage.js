@@ -17,18 +17,17 @@ export default function TransactionsPage() {
     description,
     value
   }
-  const url = `https://my-wallet-api-b0mr.onrender.com/nova-transacao/${tipo}`
 
   const config = {
     headers: {
-      Authorization: `Bearer ${context.token}`,
+      Authorization: `Bearer ${context.lsToken}`,
     }
   }
 
   function createTransaction(event) {
     event.preventDefault()
     console.log(transactionTemplate)
-    const promise = axios.post(url, transactionTemplate, config)
+    const promise = axios.post(`${process.env.REACT_APP_API_URL}nova-transacao/${tipo}`, transactionTemplate, config)
 
     promise
       .then(() => navigate("/home"))

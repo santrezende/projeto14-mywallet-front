@@ -9,19 +9,17 @@ import React from "react"
 
 export default function App() {
 
-  const lsName = localStorage.getItem("name");
-  const lsToken = localStorage.getItem("token");
+  const [lsName, setLsName] = React.useState(localStorage.getItem("name"));
+  const [lsToken, setLsToken] = React.useState(localStorage.getItem("token"));
 
-  const [token, setToken] = React.useState(lsToken);
-  const [name, setName] = React.useState(lsName);
-  const contextValue = { token, name, lsName, lsToken };
+  const contextValue = { lsName, lsToken, setLsName, setLsToken };
 
   return (
     <PagesContainer>
       <Context.Provider value={contextValue}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignInPage setToken={setToken} setName={setName} />} />
+            <Route path="/" element={<SignInPage />} />
             <Route path="/cadastro" element={<SignUpPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/nova-transacao/:tipo" element={<TransactionsPage />} />

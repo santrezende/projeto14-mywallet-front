@@ -9,8 +9,6 @@ export default function SignUpPage() {
   const navigate = useNavigate()
   const context = useContext(Context)
 
-  const url = "https://my-wallet-api-b0mr.onrender.com/cadastro";
-
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -25,7 +23,7 @@ export default function SignUpPage() {
 
   const signUp = (event) => {
     event.preventDefault();
-    const promise = axios.post(url, signUpTemplate);
+    const promise = axios.post(`${process.env.REACT_APP_API_URL}cadastro`, signUpTemplate);
 
     promise
       .then(() => {

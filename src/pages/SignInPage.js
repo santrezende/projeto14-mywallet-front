@@ -12,8 +12,6 @@ export default function SignInPage(props) {
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
 
-  const url = "https://my-wallet-api-b0mr.onrender.com/"
-
   const signInTemplate = {
     email,
     password
@@ -23,18 +21,18 @@ export default function SignInPage(props) {
     if (context.lsToken || context.lsName) {
       navigate("/home")
     }
-  }, [context.lsToken, context.lsName])
+  })
 
   const signIn = (event) => {
     event.preventDefault()
-    const promise = axios.post(url, signInTemplate)
+    const promise = axios.post(process.env.REACT_APP_API_URL, signInTemplate)
 
     promise
       .then((res) => {
-        props.setToken(res.data.token)
-        props.setName(res.data.name)
-        localStorage.setItem("token", res.data.token)
+        context.setLsName(res.data.name)
         localStorage.setItem("name", res.data.name)
+        context.setLsToken(res.data.token)
+        localStorage.setItem("token", res.data.token)
         navigate("/home")
       })
       .catch((error) => {

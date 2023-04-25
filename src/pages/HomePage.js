@@ -6,14 +6,12 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function HomePage() {
+export default function HomePage(props) {
   const context = useContext(Context)
   const navigate = useNavigate()
 
   const [transactions, setTransactions] = React.useState([])
   const [finalBalance, setFinalBalance] = React.useState(0)
-
-  const url = "https://my-wallet-api-b0mr.onrender.com/home"
 
   React.useEffect(() => {
     if (!context.lsToken || !context.lsName) {
@@ -23,14 +21,14 @@ export default function HomePage() {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${context.token}`,
+        Authorization: `Bearer ${context.lsToken}`,
       }
     }
 
-    const promise = axios.get(url, config)
+    const promise = axios.get(`${process.env.REACT_APP_API_URL}home`, config)
     promise
       .then((res) => {
-        setTransactions(res.data)
+        setTransactions(res.data.reverse())
 
         const positiveFilteredValues = res.data.filter((t) => t.type === "entrada").map((t) => parseFloat(t.value))
         const negativeFilteredValues = res.data.filter((t) => t.type === "saida").map((t) => parseFloat(t.value))
@@ -46,15 +44,17 @@ export default function HomePage() {
   function logOut() {
     const config = {
       headers: {
-        Authorization: `Bearer ${context.token}`,
+        Authorization: `Bearer ${context.lsToken}`,
       }
     }
-    const promise = axios.delete(url, config)
+    const promise = axios.delete(`${process.env.REACT_APP_API_URL}home`, config)
     promise
       .then(() => {
-        navigate("/")
+        context.setLsToken(null)
         localStorage.removeItem("token")
+        context.setLsName(null)
         localStorage.removeItem("name")
+        navigate("/")
       })
       .catch((err) => console.log(err.response.data))
   }
@@ -62,7 +62,7 @@ export default function HomePage() {
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, {context.name}</h1>
+        <h1>Olá, {context.lsName}</h1>
         <BiExit onClick={logOut} />
       </Header>
 
