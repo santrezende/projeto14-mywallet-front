@@ -4,18 +4,30 @@ import HomePage from "./pages/HomePage"
 import SignInPage from "./pages/SignInPage"
 import SignUpPage from "./pages/SignUpPage"
 import TransactionsPage from "./pages/TransactionPage"
+import Context from "./Context";
+import React from "react"
 
 export default function App() {
+
+  const lsName = localStorage.getItem("name");
+  const lsToken = localStorage.getItem("token");
+
+  const [token, setToken] = React.useState(lsToken);
+  const [name, setName] = React.useState(lsName);
+  const contextValue = { token, name, lsName, lsToken };
+
   return (
     <PagesContainer>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<SignInPage />} />
-          <Route path="/cadastro" element={<SignUpPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/nova-transacao/:tipo" element={<TransactionsPage />} />
-        </Routes>
-      </BrowserRouter>
+      <Context.Provider value={contextValue}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignInPage setToken={setToken} setName={setName} />} />
+            <Route path="/cadastro" element={<SignUpPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/nova-transacao/:tipo" element={<TransactionsPage />} />
+          </Routes>
+        </BrowserRouter>
+      </Context.Provider>
     </PagesContainer>
   )
 }
