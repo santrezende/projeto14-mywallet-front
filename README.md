@@ -27,10 +27,7 @@ The following dependencies and technologies were used in this project:
 ```bash
 npm install
 ```
-3. Crie um arquivo /.env e adicione a variável de ambiente REACT_APP_API_URL com o endereço onde sua API está rodando. A API necessária para o My Wallet está disponível aqui.
-```
-REACT_APP_API_URL=http://localhost:3000
-```
+3. Crie um arquivo /.env e adicione a variável de ambiente REACT_APP_API_URL com o endereço onde sua API está rodando.
 4. Execute a aplicação
 ```bash
 npm start
