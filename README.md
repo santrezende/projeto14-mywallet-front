@@ -9,7 +9,7 @@ Este projeto é uma aplicação web com as seguintes funcionalidades implementad
   <li>Adicionar e Deletar Despesa/Receita (Transação).</li>
 </ul>
 
-## Technologies
+## Tecnologias
 The following dependencies and technologies were used in this project:
 
 ![axios](https://img.shields.io/badge/axios-671ddf?&style=for-the-badge&logo=axios&logoColor=white
